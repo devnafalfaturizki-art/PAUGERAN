@@ -1,24 +1,32 @@
-#[derive(Debug, Clone, Default)]
+use std::sync::atomic::{AtomicBool, Ordering};
+
+#[derive(Debug, Default)]
 pub struct CancellationToken {
-    cancelled: std::sync::atomic::AtomicBool,
+    cancelled: AtomicBool,
 }
 
 impl CancellationToken {
     pub fn new() -> Self {
         Self {
-            cancelled: std::sync::atomic::AtomicBool::new(false),
+            cancelled: AtomicBool::new(false),
         }
     }
 
     pub fn cancel(&self) {
-        self.cancelled.store(true, std::sync::atomic::Ordering::SeqCst);
+        self.cancelled.store(true, Ordering::SeqCst);
     }
 
     pub fn is_cancelled(&self) -> bool {
-        self.cancelled.load(std::sync::atomic::Ordering::SeqCst)
+        self.cancelled.load(Ordering::SeqCst)
     }
 
     pub fn child_token(&self) -> Self {
+        Self::new()
+    }
+}
+
+impl Clone for CancellationToken {
+    fn clone(&self) -> Self {
         Self::new()
     }
 }

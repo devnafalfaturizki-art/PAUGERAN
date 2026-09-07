@@ -41,19 +41,19 @@ impl PreventiveMode {
     async fn run_preventive_layers(&self, context: &mut ExecutionContext) -> Result<Vec<LayerOutput>, EngineError> {
         let mut layers = Vec::new();
 
-        let grammatical = crate::engine::engine::layers::grammatical::GrammaticalInterpreter::new();
+        let grammatical = crate::engine::layers::grammatical::GrammaticalInterpreter::new();
         layers.push(grammatical.analyze(context).await?);
 
-        let systematic = crate::engine::engine::layers::systematic::SystematicInterpreter::new();
+        let systematic = crate::engine::layers::systematic::SystematicInterpreter::new();
         layers.push(systematic.analyze(context).await?);
 
-        let teleological = crate::engine::engine::layers::teleological::TeleologicalInterpreter::new();
+        let teleological = crate::engine::layers::teleological::TeleologicalInterpreter::new();
         layers.push(teleological.analyze(context).await?);
 
-        let sociological = crate::engine::engine::layers::sociological::SociologicalInterpreter::new();
+        let sociological = crate::engine::layers::sociological::SociologicalInterpreter::new();
         layers.push(sociological.analyze(context).await?);
 
-        layers
+        Ok(layers)
     }
 }
 
@@ -67,7 +67,7 @@ impl NodeExecutor for PreventiveMode {
         let risk_matrix = Self::build_risk_matrix(self, context);
         let checklist = Self::build_compliance_checklist(self, context);
 
-        let synthesis = crate::engine::engine::layers::synthesis::SynthesisEngine::new()
+        let synthesis = crate::engine::layers::synthesis::SynthesisEngine::new()
             .synthesize(&layers, context)?;
 
         let interpretation = format!(

@@ -17,12 +17,14 @@ pub enum AppError {
     NotFound(String),
     #[error("internal error: {0}")]
     Internal(String),
+    #[error("export error: {0}")]
+    Export(String),
 }
 
 impl IntoResponse for AppError {
     fn into_response(self) -> Response {
         let status = match self {
-            Self::Database(_) | Self::Internal(_) => StatusCode::INTERNAL_SERVER_ERROR,
+            Self::Database(_) | Self::Internal(_) | Self::Export(_) => StatusCode::INTERNAL_SERVER_ERROR,
             Self::Validation(_) => StatusCode::BAD_REQUEST,
             Self::NotFound(_) => StatusCode::NOT_FOUND,
         };

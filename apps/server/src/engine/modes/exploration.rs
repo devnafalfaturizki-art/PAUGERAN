@@ -1,6 +1,6 @@
 use tracing::info;
 use crate::engine::context::ExecutionContext;
-use crate::engine::nodes::{NodeExecutor, NodeResult};
+use crate::engine::nodes::{NodeExecutor, NodeOutput, NodeResult};
 use crate::engine::layers::base::{LegalLayer, LayerOutput};
 use crate::engine::mode_router::ReasoningMode;
 use crate::engine::state_machine::CaseState;
@@ -39,16 +39,16 @@ impl ExplorationMode {
     async fn run_exploration_layer(&self, context: &mut ExecutionContext) -> Result<Vec<LayerOutput>, EngineError> {
         let mut layers = Vec::new();
 
-        let grammatical = crate::engine::engine::layers::grammatical::GrammaticalInterpreter::new();
+        let grammatical = crate::engine::layers::grammatical::GrammaticalInterpreter::new();
         layers.push(grammatical.analyze(context).await?);
 
-        let systematic = crate::engine::engine::layers::systematic::SystematicInterpreter::new();
+        let systematic = crate::engine::layers::systematic::SystematicInterpreter::new();
         layers.push(systematic.analyze(context).await?);
 
-        let teleological = crate::engine::engine::layers::teleological::TeleologicalInterpreter::new();
+        let teleological = crate::engine::layers::teleological::TeleologicalInterpreter::new();
         layers.push(teleological.analyze(context).await?);
 
-        layers
+        Ok(layers)
     }
 }
 
@@ -61,7 +61,7 @@ impl NodeExecutor for ExplorationMode {
         let questions = Self::generate_clarifying_questions(self, context);
         let layers = Self::run_exploration_layer(self, context).await?;
 
-        let synthesis = crate::engine::engine::layers::synthesis::SynthesisEngine::new()
+        let synthesis = crate::engine::layers::synthesis::SynthesisEngine::new()
             .synthesize(&layers, context)?;
 
         let possible_issues: Vec<String> = context.case_graph.issues.iter().map(|i| i.content.clone()).collect();

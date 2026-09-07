@@ -44,7 +44,7 @@ impl EthicalGuardrails {
             if violation == "Tidak ada pelanggaran etika yang terdeteksi." {
                 report.push_str(&format!("{}. {}\n", i + 1, violation));
             } else {
-                report.push_str(&format!("\u{26A0} {} \n", i + 1, violation));
+                report.push_str(&format!("⚠️ {} {}\n", i + 1, violation));
             }
         }
 

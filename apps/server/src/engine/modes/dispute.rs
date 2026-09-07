@@ -30,19 +30,19 @@ impl DisputeMode {
     async fn run_dispute_layers(&self, context: &mut ExecutionContext) -> Result<Vec<LayerOutput>, EngineError> {
         let mut layers = Vec::new();
 
-        let grammatical = crate::engine::engine::layers::grammatical::GrammaticalInterpreter::new();
+        let grammatical = crate::engine::layers::grammatical::GrammaticalInterpreter::new();
         layers.push(grammatical.analyze(context).await?);
 
-        let systematic = crate::engine::engine::layers::systematic::SystematicInterpreter::new();
+        let systematic = crate::engine::layers::systematic::SystematicInterpreter::new();
         layers.push(systematic.analyze(context).await?);
 
-        let comparative = crate::engine::engine::layers::comparative::ComparativeInterpreter::new();
+        let comparative = crate::engine::layers::comparative::ComparativeInterpreter::new();
         layers.push(comparative.analyze(context).await?);
 
-        let critical = crate::engine::engine::layers::critical::CriticalInterpreter::new();
+        let critical = crate::engine::layers::critical::CriticalInterpreter::new();
         layers.push(critical.analyze(context).await?);
 
-        layers
+        Ok(layers)
     }
 }
 
@@ -56,7 +56,7 @@ impl NodeExecutor for DisputeMode {
         let (our_position, their_position) = Self::build_position_mapping(self, context);
         let settlement_options = Self::build_settlement_options(self, context);
 
-        let synthesis = crate::engine::engine::layers::synthesis::SynthesisEngine::new()
+        let synthesis = crate::engine::layers::synthesis::SynthesisEngine::new()
             .synthesize(&layers, context)?;
 
         let interpretation = format!(

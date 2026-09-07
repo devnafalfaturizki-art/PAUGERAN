@@ -65,7 +65,7 @@ impl NodeExecutor for ArgumentBuilder {
             node_id: format!("arg_build_{}", uuid::Uuid::new_v4()),
             node_type: "argument_builder".to_string(),
             success: true,
-            output: NodeOutput::Arguments { arguments },
+            output: NodeOutput::Arguments { arguments: arguments.clone() },
             confidence: 0.65,
             warnings: Vec::new(),
             metadata: serde_json::json!({"total_arguments": arguments.len()}),

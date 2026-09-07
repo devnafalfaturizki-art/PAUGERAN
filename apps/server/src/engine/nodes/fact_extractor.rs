@@ -115,12 +115,12 @@ impl NodeExecutor for FactExtractor {
             node_type: "fact_extractor".to_string(),
             success: true,
             output: NodeOutput::Facts {
-                facts: all_facts.into_iter().map(|f| crate::engine::nodes::fact_extractor::FactEntry {
+                facts: all_facts.into_iter().map(|f| crate::engine::nodes::FactEntry {
                     id: f.id,
                     content: f.content,
-                    category: format!("{:?}", f.category).to_lowercase(),
-                    source_turn: f.source_turn,
+                    source: format!("turn_{}", f.source_turn),
                     verified: f.verified,
+                    certainty: if f.verified { 0.9 } else { 0.6 },
                 }).collect(),
             },
             confidence: 0.6,

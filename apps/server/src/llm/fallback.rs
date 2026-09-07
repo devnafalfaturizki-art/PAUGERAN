@@ -11,9 +11,10 @@ pub struct FallbackChain {
 
 impl FallbackChain {
     pub fn new(providers: Vec<Box<dyn LlmProvider>>) -> Self {
+        let len = providers.len();
         Self {
             providers,
-            max_attempts: providers.len(),
+            max_attempts: len,
         }
     }
 

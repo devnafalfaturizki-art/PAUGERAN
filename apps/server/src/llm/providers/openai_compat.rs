@@ -87,6 +87,7 @@ struct CompatUsage {
     total_tokens: u32,
 }
 
+#[derive(Debug)]
 pub struct OpenAICompatibleProvider {
     client: Client,
     api_key: String,

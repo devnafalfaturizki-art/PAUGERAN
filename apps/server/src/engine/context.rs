@@ -114,6 +114,25 @@ pub struct CancellationToken {
     pub cancelled: bool,
 }
 
+impl Serialize for CancellationToken {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        self.cancelled.serialize(serializer)
+    }
+}
+
+impl<'de> Deserialize<'de> for CancellationToken {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let cancelled = bool::deserialize(deserializer)?;
+        Ok(Self { cancelled })
+    }
+}
+
 impl CancellationToken {
     pub fn cancel(&mut self) {
         self.cancelled = true;

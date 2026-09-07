@@ -60,6 +60,7 @@ struct OllamaModelInfo {
     size: u64,
 }
 
+#[derive(Debug)]
 pub struct OllamaProvider {
     client: Client,
     base_url: String,

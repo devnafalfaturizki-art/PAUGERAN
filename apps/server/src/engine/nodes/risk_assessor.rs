@@ -82,6 +82,8 @@ impl NodeExecutor for RiskAssessor {
 
         let risks = Self::assess_risks(self, context);
 
+        let total_risks = risks.len();
+
         for risk in &risks {
             context.case_graph.risks.push(crate::engine::context::GraphNode {
                 id: risk.id.clone(),
@@ -96,10 +98,10 @@ impl NodeExecutor for RiskAssessor {
             node_id: format!("risk_assess_{}", uuid::Uuid::new_v4()),
             node_type: "risk_assessor".to_string(),
             success: true,
-            output: NodeOutput::Risks { risks },
+            output: NodeOutput::Risks { risks: risks.clone() },
             confidence: 0.6,
             warnings: Vec::new(),
-            metadata: serde_json::json!({"total_risks": risks.len()}),
+            metadata: serde_json::json!({"total_risks": total_risks}),
         })
     }
 

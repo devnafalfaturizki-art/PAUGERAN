@@ -53,22 +53,22 @@ impl NeutralMode {
     async fn run_neutral_layers(&self, context: &mut ExecutionContext) -> Result<Vec<LayerOutput>, EngineError> {
         let mut layers = Vec::new();
 
-        let grammatical = crate::engine::engine::layers::grammatical::GrammaticalInterpreter::new();
+        let grammatical = crate::engine::layers::grammatical::GrammaticalInterpreter::new();
         layers.push(grammatical.analyze(context).await?);
 
-        let systematic = crate::engine::engine::layers::systematic::SystematicInterpreter::new();
+        let systematic = crate::engine::layers::systematic::SystematicInterpreter::new();
         layers.push(systematic.analyze(context).await?);
 
-        let teleological = crate::engine::engine::layers::teleological::TeleologicalInterpreter::new();
+        let teleological = crate::engine::layers::teleological::TeleologicalInterpreter::new();
         layers.push(teleological.analyze(context).await?);
 
-        let comparative = crate::engine::engine::layers::comparative::ComparativeInterpreter::new();
+        let comparative = crate::engine::layers::comparative::ComparativeInterpreter::new();
         layers.push(comparative.analyze(context).await?);
 
-        let critical = crate::engine::engine::layers::critical::CriticalInterpreter::new();
+        let critical = crate::engine::layers::critical::CriticalInterpreter::new();
         layers.push(critical.analyze(context).await?);
 
-        layers
+        Ok(layers)
     }
 }
 
@@ -81,7 +81,7 @@ impl NodeExecutor for NeutralMode {
         let layers = Self::run_neutral_layers(self, context).await?;
         let simulation = Self::simulate_judicial_review(self, context).await;
 
-        let synthesis = crate::engine::engine::layers::synthesis::SynthesisEngine::new()
+        let synthesis = crate::engine::layers::synthesis::SynthesisEngine::new()
             .synthesize(&layers, context)?;
 
         let interpretation = format!(

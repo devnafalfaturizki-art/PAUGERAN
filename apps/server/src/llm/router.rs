@@ -12,7 +12,7 @@ pub struct ModelPreference {
     pub provider: String,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct LlmRouter {
     providers: Vec<Box<dyn LlmProvider>>,
     mode_preferences: std::collections::HashMap<ReasoningMode, Vec<ModelPreference>>,

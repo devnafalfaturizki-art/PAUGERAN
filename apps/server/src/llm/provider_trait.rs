@@ -96,7 +96,7 @@ pub enum LlmError {
 }
 
 #[async_trait]
-pub trait LlmProvider: Send + Sync {
+pub trait LlmProvider: Send + Sync + std::fmt::Debug {
     fn provider_name(&self) -> &'static str;
 
     async fn chat(

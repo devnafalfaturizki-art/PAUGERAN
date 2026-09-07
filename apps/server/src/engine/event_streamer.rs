@@ -94,11 +94,13 @@ impl EventStreamer {
     }
 
     pub fn emit_reasoning_start(&self, mode: ReasoningMode) {
-        self.emit_phase_start("reasoning", format!("mode: {:?}", mode));
+        let desc = format!("mode: {:?}", mode);
+        self.emit_phase_start("reasoning", &desc);
     }
 
     pub fn emit_reasoning_complete(&self, mode: ReasoningMode) {
-        self.emit_phase_complete("reasoning", format!("mode: {:?} completed", mode));
+        let summary = format!("mode: {:?} completed", mode);
+        self.emit_phase_complete("reasoning", &summary);
     }
 
     fn emit(&self, event: ReasoningEvent) {

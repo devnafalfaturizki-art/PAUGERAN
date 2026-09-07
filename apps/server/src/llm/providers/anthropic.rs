@@ -66,6 +66,7 @@ struct AnthropicErrorDetail {
     error_type: String,
 }
 
+#[derive(Debug)]
 pub struct AnthropicProvider {
     client: Client,
     api_key: String,

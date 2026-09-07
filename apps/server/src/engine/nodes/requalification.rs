@@ -73,6 +73,7 @@ impl NodeExecutor for FactRequalifier {
         info!(case_id=%context.case_id, "performing fact re-qualification challenge");
 
         let challenges = Self::challenge_facts(self, context);
+        let total_challenges = challenges.len();
 
         Ok(NodeResult {
             node_id: format!("requal_{}", uuid::Uuid::new_v4()),
@@ -81,7 +82,7 @@ impl NodeExecutor for FactRequalifier {
             output: NodeOutput::Requalification { challenges },
             confidence: 0.7,
             warnings: Vec::new(),
-            metadata: serde_json::json!({"total_challenges": challenges.len()}),
+            metadata: serde_json::json!({"total_challenges": total_challenges}),
         })
     }
 

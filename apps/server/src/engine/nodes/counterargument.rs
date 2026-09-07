@@ -57,6 +57,7 @@ impl NodeExecutor for CounterargumentGenerator {
         info!(case_id=%context.case_id, "generating counterarguments");
 
         let counterarguments = Self::generate_counterarguments(self, context);
+        let total_counterarguments = counterarguments.len();
 
         for counter in &counterarguments {
             context.case_graph.counterarguments.push(crate::engine::context::GraphNode {
@@ -72,10 +73,10 @@ impl NodeExecutor for CounterargumentGenerator {
             node_id: format!("counter_gen_{}", uuid::Uuid::new_v4()),
             node_type: "counterargument".to_string(),
             success: true,
-            output: NodeOutput::Counterarguments { counterarguments },
+            output: NodeOutput::Counterarguments { counterarguments: counterarguments.clone() },
             confidence: 0.55,
             warnings: Vec::new(),
-            metadata: serde_json::json!({"total_counterarguments": counterarguments.len()}),
+            metadata: serde_json::json!({"total_counterarguments": total_counterarguments}),
         })
     }
 

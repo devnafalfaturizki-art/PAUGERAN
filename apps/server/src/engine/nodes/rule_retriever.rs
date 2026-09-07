@@ -141,6 +141,9 @@ impl NodeExecutor for RuleRetriever {
         let query = format!("{} {}", issues.join(" "), facts.join(" "));
         let rules = self.search_knowledge_base(context, &query);
 
+        let total_rules = rules.len();
+        let has_amended = rules.iter().any(|r| matches!(r.status, RuleStatus::Amended));
+
         for rule in &rules {
             context.case_graph.rules.push(crate::engine::context::GraphNode {
                 id: rule.id.clone(),
@@ -159,9 +162,9 @@ impl NodeExecutor for RuleRetriever {
             node_id: format!("rule_retrieval_{}", uuid::Uuid::new_v4()),
             node_type: "rule_retriever".to_string(),
             success: true,
-            output: NodeOutput::Rules { rules },
+            output: NodeOutput::Rules { rules: rules.clone() },
             confidence: 0.75,
-            warnings: if rules.iter().any(|r| matches!(r.status, RuleStatus::Amended)) {
+            warnings: if has_amended {
                 vec!["Beberapa peraturan telah diamendemen. Verifikasi versi terbaru.".to_string()]
             } else {
                 Vec::new()

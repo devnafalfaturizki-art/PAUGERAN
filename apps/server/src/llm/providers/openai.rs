@@ -50,6 +50,7 @@ struct OpenAIUsage {
     total_tokens: u32,
 }
 
+#[derive(Debug)]
 pub struct OpenAIProvider {
     client: Client,
     api_key: String,

@@ -85,7 +85,7 @@ impl NodeExecutor for ConclusionMaker {
             node_id: format!("conclusion_{}", uuid::Uuid::new_v4()),
             node_type: "conclusion_maker".to_string(),
             success: true,
-            output: NodeOutput::Conclusions { conclusions },
+            output: NodeOutput::Conclusions { conclusions: conclusions.clone() },
             confidence: 0.6,
             warnings: Vec::new(),
             metadata: serde_json::json!({"total_conclusions": conclusions.len()}),
