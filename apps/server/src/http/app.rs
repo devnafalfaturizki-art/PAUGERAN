@@ -12,7 +12,12 @@ use crate::{
 pub fn create_app(state: crate::http::state::AppState) -> Router {
     Router::new()
         .merge(router::api_router(state))
+        .route("/", get(serve_root))
         .route("/*path", get(assets::serve))
         .layer(CorsLayer::permissive())
         .layer(TraceLayer::new_for_http())
+}
+
+async fn serve_root() -> axum::response::Response {
+    assets::serve(axum::extract::Path(String::new())).await
 }

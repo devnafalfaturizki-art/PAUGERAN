@@ -29,7 +29,7 @@ mime_guess = "2.0"
 tempfile = "3.10"
 regex = "1.10"
 tokio-stream = { version = "0.1", features = ["sync"] }
-reqwest = { version = "0.12", features = ["json", "rustls-tls", "stream"], default-features = false }
+reqwest = { version = "0.12", features = ["json", "rustls-tls", "stream", "blocking"], default-features = false }
 async-trait = "0.1"
 base64 = "0.22"
 url = "2.5"
@@ -41,3 +41,6 @@ printpdf = "0.7"
 futures = "0.3"
 dirs = "5.0"
 argon2 = "0.5"
+jsonwebtoken = "9.2"
+scraper = "0.19"
+lopdf = "0.34"
