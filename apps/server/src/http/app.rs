@@ -2,19 +2,17 @@ use axum::{
     routing::get,
     Router,
 };
-use std::sync::Arc;
 use tower_http::{cors::CorsLayer, trace::TraceLayer};
 
 use crate::{
     frontend::assets,
-    http::{router, state::AppState},
+    http::router,
 };
 
-pub fn create_app(state: AppState) -> Router {
+pub fn create_app(state: crate::http::state::AppState) -> Router {
     Router::new()
-        .merge(router::api_router(state.clone()))
+        .merge(router::api_router(state))
         .route("/*path", get(assets::serve))
-        .with_state(Arc::new(state))
         .layer(CorsLayer::permissive())
         .layer(TraceLayer::new_for_http())
 }

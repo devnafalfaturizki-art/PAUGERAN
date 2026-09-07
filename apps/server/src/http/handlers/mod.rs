@@ -12,7 +12,7 @@ pub mod reasoning;
 pub mod setup;
 pub mod types;
 
-pub use admin::{create_invitation, create_user, delete_user, list_global_knowledge, list_global_providers, list_users};
+pub use admin::{create_invitation, create_user, delete_user, list_global_knowledge, list_global_providers, list_users, save_global_knowledge, save_global_provider};
 pub use case_graph::{case_graph, create_graph_edge, create_graph_node};
 pub use cases::{cases, create_case, update_case_mode, update_case_state};
 pub use documents::{list_documents, upload_document};

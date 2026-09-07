@@ -15,6 +15,20 @@ pub struct Database {
     data_dir: PathBuf,
 }
 
+impl Database {
+    /// Borrow the underlying SQLite pool. Used by handlers and
+    /// repositories that already operate within the `Database`
+    /// abstraction.
+    pub fn pool(&self) -> &SqlitePool {
+        &self.pool
+    }
+
+    /// Data directory used by this database instance.
+    pub fn data_dir(&self) -> &std::path::Path {
+        &self.data_dir
+    }
+}
+
 #[derive(Debug, Clone, sqlx::FromRow)]
 pub struct CaseRecord {
     pub id: String,

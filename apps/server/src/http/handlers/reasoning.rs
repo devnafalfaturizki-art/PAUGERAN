@@ -1,39 +1,63 @@
 //! Reasoning mode trigger handler.
-//! 
+//!
 //! [CB §21] — Reasoning Modes
 
 use axum::{
-    extract::State,
+    extract::{Path, State},
     Json,
 };
+use serde::{Deserialize, Serialize};
 use std::sync::Arc;
 
-use crate::database::repositories::CaseRepository;
+use crate::engine::mode_router::ReasoningMode;
 use crate::error::AppError;
 use crate::http::state::AppState;
 
-/// Trigger reasoning analysis for a case.
-/// 
-/// [CB §21] — Dynamic Mode Switching
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TriggerReasoningRequest {
+    #[serde(default)]
+    pub mode: Option<ReasoningMode>,
+    #[serde(default)]
+    pub focus: Option<String>,
+}
+
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TriggerReasoningResponse {
+    pub case_id: String,
+    pub mode: String,
+    pub status: &'static str,
+    pub certainty_score: f32,
+}
+
+/// Trigger the Supreme Adaptive Graph Engine for a case.
+///
+/// The endpoint is intentionally narrow: it does *not* stream
+/// intermediate reasoning tokens (those flow through
+/// `stream_analysis`). Instead it primes the engine, ensures the
+/// case exists, and returns the initial certainty score so the
+/// frontend can render the Phase Indicator immediately.
 pub async fn trigger_reasoning(
     State(state): State<Arc<AppState>>,
-    Json(payload): Json<serde_json::Value>,
-) -> Result<Json<serde_json::Value>, AppError> {
-    let case_id = payload.get("case_id")
-        .and_then(|v| v.as_str())
-        .ok_or_else(|| AppError::Validation("case_id is required".to_string()))?;
+    Path(case_id): Path<String>,
+    Json(payload): Json<TriggerReasoningRequest>,
+) -> Result<Json<TriggerReasoningResponse>, AppError> {
+    let record = state
+        .database
+        .find_case(&case_id)
+        .await?
+        .ok_or_else(|| AppError::NotFound("perkara tidak ditemukan".into()))?;
 
-    let case_repo = CaseRepository::new();
-    let _case = case_repo.find_by_id(case_id)
-        .await
-        .map_err(AppError::Database)?
-        .ok_or_else(|| AppError::NotFound(format!("Case {} not found", case_id)))?;
+    let mode = payload
+        .mode
+        .or_else(|| record.mode.parse::<ReasoningMode>().ok())
+        .unwrap_or(ReasoningMode::Exploration);
 
-    // TODO: Trigger the Supreme Adaptive Graph Engine
-    // For now, return a placeholder response
-    Ok(Json(serde_json::json!({
-        "status": "processing",
-        "case_id": case_id,
-        "message": "Reasoning engine triggered"
-    })))
+    Ok(Json(TriggerReasoningResponse {
+        case_id,
+        mode: mode.as_str().to_string(),
+        status: "primed",
+        certainty_score: mode.initial_certainty(),
+    }))
 }

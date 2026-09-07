@@ -1,48 +1,52 @@
 //! Server-Sent Events (SSE) utilities for streaming agent responses.
-//! 
+//!
 //! [CB §4.7] — HTTP Server Layer
+//!
+//! Provides ergonomic wrappers around `axum::response::sse` for the
+//! chat and reasoning streaming endpoints used by the frontend.
 
 use axum::{
-    body::Bytes,
-    response::{IntoResponse, Response, Sse},
-    Error,
+    response::{sse::Event as SseEvent, Sse},
 };
-use futures::{future::Ready, stream::Stream};
-use std::future::Future;
-use std::task::{Context, Poll};
+use futures::stream::{Stream, StreamExt};
 
-/// Create an SSE response from a stream of events.
-/// 
-/// [CB §3.4] — Streaming text renderer
-pub fn sse_response<S, E>(stream: S) -> Sse<S>
+/// Build an SSE response from a stream of already-shaped events.
+pub fn sse_response<S>(stream: S) -> Sse<S>
 where
-    S: Stream<Item = Result<axum::response::sse::Event, E>> + Send + 'static,
-    E: std::error::Error,
+    S: Stream<Item = Result<SseEvent, axum::Error>> + Send + 'static,
 {
     Sse::new(stream)
 }
 
-/// Wrap a stream of strings as SSE text events.
-pub fn text_event_stream<S, E>(stream: S) -> impl Stream<Item = Result<axum::response::sse::Event, E>>
+/// Adapt a stream of string chunks into SSE `message` events.
+pub fn text_event_stream<S>(stream: S) -> impl Stream<Item = Result<SseEvent, axum::Error>> + Send + 'static
 where
     S: Stream<Item = String> + Send + 'static,
-    E: std::error::Error,
 {
-    stream.map(|text| {
-        Ok(axum::response::sse::Event::default().event("message").data(text))
-    })
+    stream.map(|text| Ok(SseEvent::default().event("message").data(text)))
 }
 
-#[derive(Debug)]
-pub struct Event {
+/// Convenience constructor for building an SSE event from local types.
+pub fn event_from(name: impl Into<String>, data: impl Into<String>) -> SseEvent {
+    SseEvent::default().event(name.into()).data(data.into())
+}
+
+/// Stream of typed events used internally by the reasoning engine.
+#[derive(Debug, Clone)]
+pub struct AgentEvent {
     pub event: String,
     pub data: String,
 }
 
-impl axum::response::sse::Event {
-    pub fn from_event(event: Event) -> Self {
-        Self::default()
-            .event(event.event)
-            .data(event.data)
+impl AgentEvent {
+    pub fn new(event: impl Into<String>, data: impl Into<String>) -> Self {
+        Self {
+            event: event.into(),
+            data: data.into(),
+        }
+    }
+
+    pub fn into_sse(self) -> SseEvent {
+        SseEvent::default().event(self.event).data(self.data)
     }
 }

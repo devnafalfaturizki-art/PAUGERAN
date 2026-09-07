@@ -33,7 +33,7 @@ pub async fn analyze_message(
         .mode
         .parse::<ReasoningMode>()
         .map_err(|_| AppError::Internal("mode tidak dikenal".into()))?;
-    let redacted_content = state.pii_redactor.redact(payload.content.trim());
+    let (redacted_content, _mapping) = state.pii_redactor.redact(payload.content.trim());
     state
         .database
         .save_message(&id, "user", &redacted_content, None)

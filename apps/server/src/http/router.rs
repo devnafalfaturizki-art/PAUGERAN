@@ -55,5 +55,6 @@ pub fn api_router(state: AppState) -> Router {
         .route("/api/admin/providers", get(handlers::admin::list_global_providers))
         .route("/api/admin/providers", post(handlers::admin::save_global_provider))
         .route("/api/admin/knowledge", get(handlers::admin::list_global_knowledge))
+        .route("/api/admin/knowledge", post(handlers::admin::save_global_knowledge))
         .with_state(Arc::new(state))
 }

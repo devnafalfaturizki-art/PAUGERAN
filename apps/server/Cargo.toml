@@ -37,6 +37,9 @@ printpdf.workspace = true
 aes-gcm.workspace = true
 rand.workspace = true
 anyhow.workspace = true
+futures.workspace = true
+dirs.workspace = true
+argon2.workspace = true
 
 [dev-dependencies]
 tower.workspace = true
