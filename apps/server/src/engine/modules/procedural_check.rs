@@ -1,0 +1,1 @@
+//! Procedural check module boundary.

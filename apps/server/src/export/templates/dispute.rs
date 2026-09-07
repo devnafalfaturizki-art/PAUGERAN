@@ -1,0 +1,1 @@
+//! Dispute report template boundary.

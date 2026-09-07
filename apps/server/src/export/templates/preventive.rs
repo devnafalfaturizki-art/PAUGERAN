@@ -1,0 +1,1 @@
+//! Preventive report template boundary.

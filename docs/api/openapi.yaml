@@ -1,0 +1,22 @@
+openapi: 3.1.0
+info:
+  title: PAUGERAN API
+  version: 0.1.0
+servers:
+  - url: http://localhost:3000
+paths:
+  /health:
+    get:
+      responses:
+        '200': { description: OK }
+  /api/cases:
+    get:
+      responses:
+        '200': { description: Case list }
+    post:
+      responses:
+        '201': { description: Case created }
+  /api/cases/{id}/graph:
+    get:
+      responses:
+        '200': { description: Case graph }

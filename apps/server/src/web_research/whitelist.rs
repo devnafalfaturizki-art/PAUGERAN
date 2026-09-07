@@ -1,0 +1,1 @@
+//! Trusted domain whitelist boundary.

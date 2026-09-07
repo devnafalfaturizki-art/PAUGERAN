@@ -1,0 +1,1 @@
+//! Exploration report template boundary.

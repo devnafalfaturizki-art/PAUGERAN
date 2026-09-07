@@ -1,0 +1,1 @@
+//! Temporal legal tracker boundary.

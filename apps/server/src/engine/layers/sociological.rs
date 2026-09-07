@@ -1,0 +1,1 @@
+//! Sociological interpretation layer.

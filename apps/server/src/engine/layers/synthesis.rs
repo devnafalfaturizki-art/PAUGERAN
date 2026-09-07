@@ -1,0 +1,1 @@
+//! Seven-layer synthesis boundary.

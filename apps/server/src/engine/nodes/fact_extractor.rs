@@ -1,0 +1,1 @@
+//! Fact extractor node boundary.

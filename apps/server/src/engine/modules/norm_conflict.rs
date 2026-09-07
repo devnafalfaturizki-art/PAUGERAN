@@ -1,0 +1,1 @@
+//! Norm conflict module boundary.

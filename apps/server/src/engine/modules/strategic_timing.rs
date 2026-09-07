@@ -1,0 +1,1 @@
+//! Strategic timing module boundary.

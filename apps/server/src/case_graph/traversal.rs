@@ -1,0 +1,1 @@
+//! Case Graph traversal boundary.

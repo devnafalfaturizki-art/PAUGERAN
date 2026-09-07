@@ -1,0 +1,1 @@
+//! Optional authentication middleware boundary.

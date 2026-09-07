@@ -1,0 +1,1 @@
+//! Rule retriever node boundary.

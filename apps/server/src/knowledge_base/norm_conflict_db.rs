@@ -1,0 +1,1 @@
+//! Norm conflict database boundary.

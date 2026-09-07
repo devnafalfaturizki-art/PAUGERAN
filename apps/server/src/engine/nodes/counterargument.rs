@@ -1,0 +1,1 @@
+//! Counterargument node boundary.

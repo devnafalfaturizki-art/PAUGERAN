@@ -1,0 +1,1 @@
+//! Reasoning event streaming boundary.

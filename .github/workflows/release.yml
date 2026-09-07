@@ -1,0 +1,13 @@
+name: Release
+on:
+  push:
+    tags: ['v*']
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo build --release --bin paugeran
+      - uses: actions/upload-artifact@v4
+        with: { name: paugeran-linux, path: target/release/paugeran }

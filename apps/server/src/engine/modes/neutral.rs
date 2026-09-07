@@ -1,0 +1,1 @@
+//! Neutral reasoning mode boundary.

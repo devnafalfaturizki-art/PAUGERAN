@@ -1,0 +1,1 @@
+//! Full citation renderer boundary.

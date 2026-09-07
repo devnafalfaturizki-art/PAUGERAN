@@ -1,0 +1,1 @@
+//! Legal hierarchy renderer boundary.

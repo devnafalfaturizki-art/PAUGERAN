@@ -1,0 +1,32 @@
+[package]
+name = "paugeran"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "PAUGERAN Supreme Legal Reasoning Engine"
+
+[[bin]]
+name = "paugeran"
+path = "src/main.rs"
+
+[dependencies]
+axum.workspace = true
+tokio.workspace = true
+tower-http.workspace = true
+sqlx.workspace = true
+petgraph.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+thiserror.workspace = true
+uuid.workspace = true
+chrono.workspace = true
+rust-embed.workspace = true
+mime_guess.workspace = true
+
+[dev-dependencies]
+tower.workspace = true
+tempfile.workspace = true

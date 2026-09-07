@@ -1,0 +1,1 @@
+//! Hybrid knowledge search boundary.

@@ -1,0 +1,1 @@
+//! Corporate governance module boundary.

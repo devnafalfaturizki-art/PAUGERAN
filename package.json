@@ -1,0 +1,16 @@
+{
+  "name": "paugeran",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Supreme Legal Reasoning Engine for Indonesian Law",
+  "scripts": {
+    "dev": "pnpm --filter @paugeran/web dev",
+    "build": "pnpm --filter @paugeran/web build",
+    "typecheck": "pnpm --filter @paugeran/web typecheck",
+    "test": "pnpm --filter @paugeran/web test",
+    "build:server": "cargo build --release --bin paugeran",
+    "test:server": "cargo test"
+  },
+  "packageManager": "pnpm@9.1.0",
+  "engines": { "node": ">=20.0.0" }
+}

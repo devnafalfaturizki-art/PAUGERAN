@@ -1,0 +1,1 @@
+//! Precedential weight boundary.

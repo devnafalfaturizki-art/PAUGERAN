@@ -1,0 +1,1 @@
+//! Litigation report template boundary.

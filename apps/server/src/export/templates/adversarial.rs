@@ -1,0 +1,1 @@
+//! Adversarial report template boundary.
