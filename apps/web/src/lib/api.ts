@@ -1,4 +1,4 @@
-import type { CaseSummary, ReasoningMode } from '../../../../packages/shared/src';
+import type { CaseSummary, ReasoningMode, KnowledgeEntry } from '../../../../packages/shared/src';
 
 export type AnalysisResponse = {
   role: 'system';
@@ -48,4 +48,16 @@ export function streamAnalysis(caseId: string, onEvent: (event: MessageEvent) =>
   source.addEventListener('phase', onEvent);
   source.addEventListener('complete', onEvent);
   return source;
+}
+
+export function listKnowledge(): Promise<KnowledgeEntry[]> {
+  return request<KnowledgeEntry[]>('/api/knowledge');
+}
+
+export function addKnowledge(entry: Omit<KnowledgeEntry, 'id' | 'createdAt'>): Promise<KnowledgeEntry> {
+  return request<KnowledgeEntry>('/api/knowledge', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(entry),
+  });
 }
