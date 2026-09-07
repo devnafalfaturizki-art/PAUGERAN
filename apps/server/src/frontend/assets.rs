@@ -1,7 +1,7 @@
 use axum::{
     extract::Path,
     http::{header, HeaderValue, StatusCode},
-    response::Response,
+    response::{IntoResponse, Response},
 };
 use rust_embed::RustEmbed;
 
@@ -22,14 +22,16 @@ pub async fn serve(Path(requested): Path<String>) -> Response {
     let content_type = mime_guess::from_path(asset_path)
         .first_or_octet_stream()
         .to_string();
-    Response::builder()
+    let header = match HeaderValue::from_str(&content_type) {
+        Ok(h) => h,
+        Err(_) => return StatusCode::INTERNAL_SERVER_ERROR.into_response(),
+    };
+    match Response::builder()
         .status(StatusCode::OK)
-        .header(
-            header::CONTENT_TYPE,
-            HeaderValue::from_str(&content_type).unwrap(),
-        )
+        .header(header::CONTENT_TYPE, header)
         .body(axum::body::Body::from(asset.data.into_owned()))
-        .unwrap()
+    {
+        Ok(resp) => resp.into_response(),
+        Err(_) => StatusCode::INTERNAL_SERVER_ERROR.into_response(),
+    }
 }
-
-use axum::response::IntoResponse;

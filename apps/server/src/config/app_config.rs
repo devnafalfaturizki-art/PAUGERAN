@@ -17,12 +17,14 @@ pub struct AppConfig {
     pub port: u16,
     /// Data directory path
     pub data_dir: PathBuf,
+    /// Optional full database URL override
+    pub database_url: Option<String>,
 }
 
 impl AppConfig {
     /// Load configuration from environment variables with defaults.
     pub fn from_env() -> Self {
-        let (host, port, data_dir) = load_config();
+        let (host, port, data_dir, database_url) = load_config();
         
         let data_dir = if data_dir == PathBuf::from(DEFAULT_DATA_DIR) {
             default_data_dir()
@@ -34,6 +36,7 @@ impl AppConfig {
             host,
             port,
             data_dir,
+            database_url,
         }
     }
 

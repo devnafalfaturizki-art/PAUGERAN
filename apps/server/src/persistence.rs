@@ -1,15 +1,18 @@
 use chrono::{DateTime, Utc};
 use serde::Serialize;
 use sqlx::{sqlite::SqlitePoolOptions, SqlitePool};
+use std::path::PathBuf;
 use uuid::Uuid;
 
 use crate::case_graph::{CaseEdge, CaseNode};
+use crate::crypto::key_manager::{decrypt_api_key, encrypt_api_key};
 use crate::engine::mode_router::ReasoningMode;
 use crate::engine::state_machine::CaseState;
 
 #[derive(Clone)]
 pub struct Database {
     pool: SqlitePool,
+    data_dir: PathBuf,
 }
 
 #[derive(Debug, Clone, sqlx::FromRow)]
@@ -47,7 +50,14 @@ pub struct CaseEdgeRecord {
 impl Database {
     pub async fn connect(data_dir: &str) -> Result<Self, sqlx::Error> {
         std::fs::create_dir_all(data_dir).map_err(sqlx::Error::Io)?;
-        let url = format!("sqlite://{data_dir}/paugeran.db");
+        Self::connect_inner(&format!("sqlite://{data_dir}/paugeran.db"), PathBuf::from(data_dir)).await
+    }
+
+    pub async fn connect_url(url: &str) -> Result<Self, sqlx::Error> {
+        Self::connect_inner(url, PathBuf::from(".")).await
+    }
+
+    async fn connect_inner(url: &str, data_dir: PathBuf) -> Result<Self, sqlx::Error> {
         let pool = SqlitePoolOptions::new()
             .max_connections(5)
             .connect_with(
@@ -58,7 +68,7 @@ impl Database {
 
         sqlx::migrate!("./migrations").run(&pool).await?;
 
-        Ok(Self { pool })
+        Ok(Self { pool, data_dir })
     }
 
     pub async fn list_cases(&self) -> Result<Vec<CaseRecord>, sqlx::Error> {
@@ -228,13 +238,35 @@ impl Database {
     }
 
     pub async fn list_providers(&self) -> Result<Vec<crate::database::models::provider::ProviderRecord>, sqlx::Error> {
-        sqlx::query_as::<_, crate::database::models::provider::ProviderRecord>("SELECT id, name, provider_type, api_key, model, created_at FROM providers ORDER BY created_at DESC")
-            .fetch_all(&self.pool).await
+        let rows = sqlx::query_as::<_, (String, String, String, String, String, String)>(
+            "SELECT id, name, provider_type, api_key, model, created_at FROM providers ORDER BY created_at DESC",
+        )
+        .fetch_all(&self.pool)
+        .await?;
+
+        let mut providers = Vec::with_capacity(rows.len());
+        for (id, name, provider_type, encrypted_api_key, model, created_at) in rows {
+            let api_key = match decrypt_api_key(&encrypted_api_key, &self.data_dir) {
+                Ok(key) => key,
+                Err(_) => String::new(),
+            };
+            providers.push(crate::database::models::provider::ProviderRecord {
+                id,
+                name,
+                provider_type,
+                api_key,
+                model,
+                created_at,
+            });
+        }
+        Ok(providers)
     }
 
     pub async fn save_provider(&self, record: &crate::database::models::provider::ProviderRecord) -> Result<(), sqlx::Error> {
+        let encrypted_api_key = encrypt_api_key(&record.api_key, &self.data_dir)
+            .map_err(|e| sqlx::Error::Io(std::io::Error::new(std::io::ErrorKind::Other, e.to_string())))?;
         sqlx::query("INSERT OR REPLACE INTO providers (id, name, provider_type, api_key, model, created_at) VALUES (?, ?, ?, ?, ?, ?)")
-            .bind(&record.id).bind(&record.name).bind(&record.provider_type).bind(&record.api_key).bind(&record.model).bind(&record.created_at)
+            .bind(&record.id).bind(&record.name).bind(&record.provider_type).bind(&encrypted_api_key).bind(&record.model).bind(&record.created_at)
             .execute(&self.pool).await?;
         Ok(())
     }

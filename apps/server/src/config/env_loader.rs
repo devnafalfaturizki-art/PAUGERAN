@@ -31,11 +31,15 @@ pub fn load_config() -> (String, u16, PathBuf) {
         .map(PathBuf::from)
         .unwrap_or_else(|| PathBuf::from(DEFAULT_DATA_DIR));
 
-    (host, port, data_dir)
+    let database_url = env::var(format!("{}DATABASE_URL", ENV_PREFIX))
+        .or_else(|_| env::var("DATABASE_URL"))
+        .ok();
+
+    (host, port, data_dir, database_url)
 }
 
 #[allow(dead_code)]
-pub fn load_socket_addr() -> Result<SocketAddr, std::net::AddrParseError> {
-    let (host, port, _) = load_config();
+pub fn load_socket_addr() -> Result<std::net::SocketAddr, std::net::AddrParseError> {
+    let (host, port, _, _) = load_config();
     format!("{}:{}", host, port).parse()
 }
