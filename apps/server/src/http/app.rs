@@ -18,6 +18,10 @@ pub fn create_app(state: AppState) -> Router {
         .route("/api/cases/:id/state", patch(handlers::update_case_state))
         .route("/api/cases/:id/mode", patch(handlers::update_case_mode))
         .route("/api/cases/:id/messages", post(handlers::analyze_message))
+        .route(
+            "/api/cases/:id/messages/stream",
+            get(handlers::stream_analysis),
+        )
         .route("/api/cases/:id/graph", get(handlers::case_graph))
         .route(
             "/api/cases/:id/graph/nodes",
@@ -27,6 +31,19 @@ pub fn create_app(state: AppState) -> Router {
             "/api/cases/:id/graph/edges",
             post(handlers::create_graph_edge),
         )
+        .route("/api/cases/:id/documents", get(handlers::list_documents))
+        .route(
+            "/api/cases/:id/documents/upload",
+            post(handlers::upload_document),
+        )
+        .route("/api/cases/:id/export", post(handlers::export_case))
+        .route("/api/knowledge", get(handlers::list_knowledge))
+        .route("/api/knowledge", post(handlers::add_knowledge))
+        .route("/api/providers", get(handlers::list_providers))
+        .route("/api/providers", post(handlers::save_provider))
+        .route("/api/preferences", get(handlers::get_preferences))
+        .route("/api/preferences", post(handlers::save_preferences))
+        .route("/api/setup", post(handlers::setup))
         .route("/*path", get(assets::serve))
         .with_state(Arc::new(state))
         .layer(CorsLayer::permissive())

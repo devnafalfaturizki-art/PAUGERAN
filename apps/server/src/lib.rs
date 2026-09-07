@@ -1,5 +1,6 @@
 pub mod case_graph;
 pub mod config;
+pub mod crypto;
 pub mod database;
 pub mod engine;
 pub mod error;

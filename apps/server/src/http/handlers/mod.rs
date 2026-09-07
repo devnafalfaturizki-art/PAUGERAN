@@ -1,10 +1,22 @@
 pub mod case_graph;
 pub mod cases;
+pub mod documents;
+pub mod export_handler;
 pub mod health;
+pub mod knowledge;
 pub mod messages;
+pub mod preferences;
+pub mod providers;
+pub mod setup;
 pub mod types;
 
 pub use case_graph::{case_graph, create_graph_edge, create_graph_node};
 pub use cases::{cases, create_case, update_case_mode, update_case_state};
+pub use documents::{list_documents, upload_document};
+pub use export_handler::export_case;
 pub use health::health;
-pub use messages::analyze_message;
+pub use knowledge::{add_knowledge, list_knowledge};
+pub use messages::{analyze_message, stream_analysis};
+pub use preferences::{get_preferences, save_preferences};
+pub use providers::{list_providers, save_provider};
+pub use setup::setup;

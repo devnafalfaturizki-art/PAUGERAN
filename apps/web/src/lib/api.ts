@@ -42,3 +42,10 @@ export function analyzeMessage(caseId: string, content: string): Promise<Analysi
     body: JSON.stringify({ content }),
   });
 }
+
+export function streamAnalysis(caseId: string, onEvent: (event: MessageEvent) => void): EventSource {
+  const source = new EventSource(`/api/cases/${caseId}/messages/stream`);
+  source.addEventListener('phase', onEvent);
+  source.addEventListener('complete', onEvent);
+  return source;
+}

@@ -8,3 +8,5 @@ pub mod node_trait;
 pub mod requalification;
 pub mod risk_assessor;
 pub mod rule_retriever;
+
+pub use node_trait::{NodeExecutor, NodeOutput, NodeResult, ArgumentEntry, ArgumentStrength, CounterargumentEntry, ConclusionEntry, FactEntry, IssueEntry, IssuePriority, RequalificationChallenge, RiskEntry, RiskImpact, RuleEntry, RuleStatus};

@@ -1,4 +1,8 @@
-use crate::http::{handlers::types::HealthResponse, state::AppState};
+use crate::{
+    database::Database,
+    error::AppError,
+    http::{handlers::types::HealthResponse, state::AppState},
+};
 use axum::{extract::State, response::Json};
 use std::sync::Arc;
 

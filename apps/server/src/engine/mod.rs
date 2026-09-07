@@ -8,3 +8,5 @@ pub mod modes;
 pub mod modules;
 pub mod nodes;
 pub mod state_machine;
+
+pub use context::EngineError;

@@ -14,6 +14,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let app = create_app(AppState {
         started_at: chrono::Utc::now(),
         database,
+        pii_redactor: paugeran::crypto::pii_redactor::PiiRedactor::default(),
     });
     let address = config.address()?;
     tracing::info!(%address, "PAUGERAN server listening");

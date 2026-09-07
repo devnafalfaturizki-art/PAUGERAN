@@ -203,6 +203,54 @@ impl Database {
         Ok(())
     }
 
+    pub async fn list_documents(&self, case_id: &str) -> Result<Vec<crate::database::models::document::DocumentRecord>, sqlx::Error> {
+        sqlx::query_as::<_, crate::database::models::document::DocumentRecord>("SELECT id, case_id, filename, content_type, size, created_at FROM documents WHERE case_id = ? ORDER BY created_at")
+            .bind(case_id).fetch_all(&self.pool).await
+    }
+
+    pub async fn save_document(&self, record: &crate::database::models::document::DocumentRecord) -> Result<(), sqlx::Error> {
+        sqlx::query("INSERT OR REPLACE INTO documents (id, case_id, filename, content_type, size, created_at) VALUES (?, ?, ?, ?, ?, ?)")
+            .bind(&record.id).bind(&record.case_id).bind(&record.filename).bind(&record.content_type).bind(&record.size).bind(&record.created_at)
+            .execute(&self.pool).await?;
+        Ok(())
+    }
+
+    pub async fn list_knowledge(&self) -> Result<Vec<crate::database::models::knowledge::KnowledgeRecord>, sqlx::Error> {
+        sqlx::query_as::<_, crate::database::models::knowledge::KnowledgeRecord>("SELECT id, title, content, tags, created_at FROM knowledge_base ORDER BY created_at DESC")
+            .fetch_all(&self.pool).await
+    }
+
+    pub async fn save_knowledge(&self, record: &crate::database::models::knowledge::KnowledgeRecord) -> Result<(), sqlx::Error> {
+        sqlx::query("INSERT OR REPLACE INTO knowledge_base (id, title, content, tags, created_at) VALUES (?, ?, ?, ?, ?)")
+            .bind(&record.id).bind(&record.title).bind(&record.content).bind(&record.tags).bind(&record.created_at)
+            .execute(&self.pool).await?;
+        Ok(())
+    }
+
+    pub async fn list_providers(&self) -> Result<Vec<crate::database::models::provider::ProviderRecord>, sqlx::Error> {
+        sqlx::query_as::<_, crate::database::models::provider::ProviderRecord>("SELECT id, name, provider_type, api_key, model, created_at FROM providers ORDER BY created_at DESC")
+            .fetch_all(&self.pool).await
+    }
+
+    pub async fn save_provider(&self, record: &crate::database::models::provider::ProviderRecord) -> Result<(), sqlx::Error> {
+        sqlx::query("INSERT OR REPLACE INTO providers (id, name, provider_type, api_key, model, created_at) VALUES (?, ?, ?, ?, ?, ?)")
+            .bind(&record.id).bind(&record.name).bind(&record.provider_type).bind(&record.api_key).bind(&record.model).bind(&record.created_at)
+            .execute(&self.pool).await?;
+        Ok(())
+    }
+
+    pub async fn get_preference(&self, user_id: &str) -> Result<Option<crate::database::models::preference::PreferenceRecord>, sqlx::Error> {
+        sqlx::query_as::<_, crate::database::models::preference::PreferenceRecord>("SELECT id, user_id, theme, font_size, language, updated_at FROM preferences WHERE user_id = ?")
+            .bind(user_id).fetch_optional(&self.pool).await
+    }
+
+    pub async fn save_preference(&self, record: &crate::database::models::preference::PreferenceRecord) -> Result<(), sqlx::Error> {
+        sqlx::query("INSERT OR REPLACE INTO preferences (id, user_id, theme, font_size, language, updated_at) VALUES (?, ?, ?, ?, ?, ?)")
+            .bind(&record.id).bind(&record.user_id).bind(&record.theme).bind(&record.font_size).bind(&record.language).bind(&record.updated_at)
+            .execute(&self.pool).await?;
+        Ok(())
+    }
+
     pub fn parse_timestamp(value: &str) -> DateTime<Utc> {
         DateTime::parse_from_rfc3339(value)
             .map(|timestamp| timestamp.with_timezone(&Utc))
