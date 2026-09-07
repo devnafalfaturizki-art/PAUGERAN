@@ -1,0 +1,28 @@
+{
+  "rules": [
+    {
+      "id": "dalu-001",
+      "name": "Daluwarsa Gugatan Perdata Umum",
+      "periodYears": 5,
+      "legalBasis": "Pasal 1847 KUHPerdata",
+      "description": "Gugatan perdata umum harus diajukan dalam jangka waktu 5 tahun sejak mengetahui haknya dilanggar.",
+      "exceptions": ["Anak terhadap orang tua", "Pihak yang berhalangan hukum"]
+    },
+    {
+      "id": "dalu-002",
+      "name": "Daluwarsa Gugatan Wanprestasi",
+      "periodYears": 5,
+      "legalBasis": "Pasal 1847 KUHPerdata",
+      "description": "Gugatan wanprestasi harus diajukan dalam jangka waktu 5 tahun.",
+      "exceptions": []
+    },
+    {
+      "id": "dalu-003",
+      "name": "Daluwarsa Gugatan Perbuatan Melawan Hukum",
+      "periodYears": 5,
+      "legalBasis": "Pasal 1847 KUHPerdata",
+      "description": "Gugatan perbuatan melawan hukum harus diajukan dalam jangka waktu 5 tahun.",
+      "exceptions": []
+    }
+  ]
+}

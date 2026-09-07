@@ -1,0 +1,31 @@
+name: Documentation Deployment
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - 'README.md'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install -g markdown-toc
+      - run: markdown-toc docs/architecture/repository-architecture.md -i
+      - run: markdown-toc docs/prd/master-specification.md -i
+      - name: Commit updated docs
+        run: |
+          git config user.name "PAUGERAN Bot"
+          git config user.email "bot@paugeran.com"
+          git add docs/
+          git diff --quiet && echo "No changes to commit" || git commit -m "docs: update table of contents"
+          git push

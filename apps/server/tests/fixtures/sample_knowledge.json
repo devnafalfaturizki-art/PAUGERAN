@@ -1,0 +1,28 @@
+{
+  "entries": [
+    {
+      "id": "kb-001",
+      "title": "Pasal 1243 KUHPerdata",
+      "fullText": "Orang yang karena salah atau kelalaiannya mengakibatkan tidak dilaksanakannya sesuatu perjanjian, wajib mengganti kerugian yang demikian.",
+      "hierarchyLevel": 5,
+      "precedentialWeight": 0.9,
+      "effectiveDate": "1847-01-01",
+      "revokedDate": null,
+      "tags": ["wanprestasi", "ganti rugi", "kuhperdata"],
+      "sourceUrl": "https://jdih.kumham.go.id",
+      "createdAt": "2026-09-07T08:00:00Z"
+    },
+    {
+      "id": "kb-002",
+      "title": "Pasal 158 UU No. 13 Tahun 2003",
+      "fullText": "Dalam hal pengusaha memutuskan hubungan kerja, maka sebelum memutuskan hubungan kerja pengusaha terlebih dahulu harus mengajukan permohonan izin pembubaran hubungan kerja kepada Panitia Hubungan Industrial.",
+      "hierarchyLevel": 2,
+      "precedentialWeight": 0.85,
+      "effectiveDate": "2003-03-25",
+      "revokedDate": null,
+      "tags": ["phk", "izin phi", "ketenagakerjaan"],
+      "sourceUrl": "https://jdih.setkab.go.id",
+      "createdAt": "2026-09-07T08:00:00Z"
+    }
+  ]
+}

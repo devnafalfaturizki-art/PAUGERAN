@@ -1,0 +1,43 @@
+{
+  "id": "test-case-001",
+  "title": "Sengketa Perjanjian Jasa Konsultasi",
+  "state": "dispute",
+  "mode": "dispute",
+  "updatedAt": "2026-09-07T08:00:00Z",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Saya ingin menggugat ganti rugi karena wanprestasi.",
+      "createdAt": "2026-09-07T08:00:00Z"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "node-001",
+      "caseId": "test-case-001",
+      "nodeType": "fact",
+      "content": "Pihak pertama dan pihak kedua menandatangani perjanjian jasa konsultasi pada 15 Januari 2024.",
+      "metadata": {},
+      "createdAt": "2026-09-07T08:00:00Z"
+    },
+    {
+      "id": "node-002",
+      "caseId": "test-case-001",
+      "nodeType": "issue",
+      "content": "Apakah terjadi wanprestasi berdasarkan perjanjian yang telah ditandatangani?",
+      "metadata": {},
+      "createdAt": "2026-09-07T08:00:00Z"
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-001",
+      "caseId": "test-case-001",
+      "sourceNodeId": "node-001",
+      "targetNodeId": "node-002",
+      "edgeType": "derived_from",
+      "metadata": {},
+      "createdAt": "2026-09-07T08:00:00Z"
+    }
+  ]
+}

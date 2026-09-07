@@ -1,0 +1,22 @@
+{
+  "conflicts": [
+    {
+      "id": "nc-001",
+      "provisionA": "Pasal 158 UU No. 13 Tahun 2003",
+      "provisionB": "Pasal 81 UU No. 6 Tahun 2023 (Cipta Kerja)",
+      "conflictType": "temporal",
+      "resolution": "Lex posterior derogat legi priori",
+      "applicableProvision": "Pasal 81 UU Cipta Kerja untuk peristiwa setelah 2020",
+      "notes": "UU Cipta Kerja mengubah prosedur PHK dengan menghapus kewajiban izin PHI"
+    },
+    {
+      "id": "nc-002",
+      "provisionA": "Pasal 23 UU No. 13 Tahun 2003",
+      "provisionB": "Pasal 68 UU No. 6 Tahun 2023 (Cipta Kerja)",
+      "conflictType": "special_general",
+      "resolution": "Lex specialis derogat legi generali",
+      "applicableProvision": "UU Cipta Kerja Pasal 68",
+      "notes": "UU Cipta Kerja adalah undang-undang khusus yang mengatur ketenagakerjaan"
+    }
+  ]
+}

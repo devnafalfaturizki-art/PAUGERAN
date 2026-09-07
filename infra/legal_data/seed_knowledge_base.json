@@ -1,0 +1,40 @@
+{
+  "entries": [
+    {
+      "id": "seed-kb-001",
+      "title": "Pasal 1243 KUHPerdata",
+      "fullText": "Orang yang karena salah atau kelalaiannya mengakibatkan tidak dilaksanakannya sesuatu perjanjian, wajib mengganti kerugian yang demikian.",
+      "hierarchyLevel": 5,
+      "precedentialWeight": 0.9,
+      "effectiveDate": "1847-01-01",
+      "revokedDate": null,
+      "tags": ["wanprestasi", "ganti rugi", "kuhperdata"],
+      "sourceUrl": "https://jdih.kumham.go.id",
+      "createdAt": "2026-09-07T08:00:00Z"
+    },
+    {
+      "id": "seed-kb-002",
+      "title": "Pasal 1246 KUHPerdata",
+      "fullText": "Ganti rugi terdiri dari kerugian yang dialami dan keuntungan yang hilang.",
+      "hierarchyLevel": 5,
+      "precedentialWeight": 0.9,
+      "effectiveDate": "1847-01-01",
+      "revokedDate": null,
+      "tags": ["ganti rugi", "kerugian", "keuntungan"],
+      "sourceUrl": "https://jdih.kumham.go.id",
+      "createdAt": "2026-09-07T08:00:00Z"
+    },
+    {
+      "id": "seed-kb-003",
+      "title": "Pasal 1338 KUHPerdata",
+      "fullText": "Segala perjanjian yang diadakan oleh mereka yang mengadakan perjanjian itu, berlaku sebagai undang-undang bagi mereka yang mengadakannya.",
+      "hierarchyLevel": 5,
+      "precedentialWeight": 0.95,
+      "effectiveDate": "1847-01-01",
+      "revokedDate": null,
+      "tags": ["pacta sunt servanda", "perjanjian"],
+      "sourceUrl": "https://jdih.kumham.go.id",
+      "createdAt": "2026-09-07T08:00:00Z"
+    }
+  ]
+}

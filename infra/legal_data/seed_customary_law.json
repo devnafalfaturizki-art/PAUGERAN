@@ -1,0 +1,31 @@
+{
+  "entries": [
+    {
+      "id": "custom-001",
+      "region": "Bali",
+      "topic": "waris",
+      "description": "Sistem waris Bali membedakan purusa (anak laki-laki) dan pradana (anak perempuan). Anak laki-laki mendapat harta peninggalan sedangkan anak perempuan mendapat igel-igel.",
+      "legalBasis": "Hukum Adat Bali",
+      "conflictWithStateLaw": true,
+      "conflictNote": "Bertentangan dengan UU No. 1 Tahun 1974 tentang Perkawinan yang menganut sistem individual"
+    },
+    {
+      "id": "custom-002",
+      "region": "Minangkabau",
+      "topic": "tanah",
+      "description": "Tanah ulayat dimiliki secara kolektif oleh suku dan tidak boleh dijual ke luar keluarga.",
+      "legalBasis": "Hukum Adat Minangkabau",
+      "conflictWithStateLaw": true,
+      "conflictNote": "Dapat membatasi hak milik perorangan berdasarkan UU No. 5 Tahun 1960 tentang Peraturan Dasar Pokok-pokok Agraria"
+    },
+    {
+      "id": "custom-003",
+      "region": "Yogyakarta",
+      "topic": "waris",
+      "description": "Sistem kewarisan bilateral di mana anak laki-laki dan perempuan mendapat bagian yang sama.",
+      "legalBasis": "Hukum Adat Yogyakarta",
+      "conflictWithStateLaw": false,
+      "conflictNote": "Selaras dengan KUHPerdata"
+    }
+  ]
+}

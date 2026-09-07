@@ -1,0 +1,34 @@
+{
+  "precedents": [
+    {
+      "id": "prec-001",
+      "source": "Putusan MA No. 3155 K/Pdt/1984",
+      "court": "Mahkamah Agung",
+      "year": 1984,
+      "weight": 0.95,
+      "status": "tetap",
+      "ratioDecidendi": "Wanprestasi terjadi apabila debitur tidak memenuhi kewajiban sesuai perjanjian.",
+      "tags": ["wanprestasi", "yurisprudensi tetap"]
+    },
+    {
+      "id": "prec-002",
+      "source": "Putusan MA No. 2721 K/Pdt/1999",
+      "court": "Mahkamah Agung",
+      "year": 1999,
+      "weight": 0.9,
+      "status": "yurisprudensi",
+      "ratioDecidendi": "Ganti rugi mencakup kerugian materiil dan immateriil.",
+      "tags": ["ganti rugi", "kerugian immateriil"]
+    },
+    {
+      "id": "prec-003",
+      "source": "Putusan MA No. 1504 K/Pdt/2015",
+      "court": "Mahkamah Agung",
+      "year": 2015,
+      "weight": 0.7,
+      "status": "putusan",
+      "ratioDecidendi": "Force majeure dapat menimbulkan tanggung jawab wanprestasi jika dibuktikan.",
+      "tags": ["force majeure", "pembuktian"]
+    }
+  ]
+}

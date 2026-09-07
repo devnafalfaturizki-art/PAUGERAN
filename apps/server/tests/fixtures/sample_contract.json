@@ -1,0 +1,38 @@
+{
+  "title": "Perjanjian Jasa Konsultasi",
+  "parties": [
+    {
+      "id": "party-001",
+      "name": "PT ABC",
+      "role": "Penggugat"
+    },
+    {
+      "id": "party-002",
+      "name": "PT XYZ",
+      "role": "Tergugat"
+    }
+  ],
+  "facts": [
+    {
+      "id": "fact-001",
+      "content": "Perjanjian ditandatangani pada 15 Januari 2024",
+      "verified": true
+    },
+    {
+      "id": "fact-002",
+      "content": "PT ABC telah melakukan pembayaran sesuai jadwal",
+      "verified": true
+    },
+    {
+      "id": "fact-003",
+      "content": "PT XYZ tidak menyelesaikan pekerjaan sesuai tenggat",
+      "verified": false
+    }
+  ],
+  "issues": [
+    {
+      "id": "issue-001",
+      "question": "Apakah PT XYZ melakukan wanprestasi?"
+    }
+  ]
+}
